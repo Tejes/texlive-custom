@@ -9,17 +9,17 @@ RUN apt-get update \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
-WORKDIR ~
+WORKDIR /root
 
 # Download the latest TeX Live installer
 RUN wget -nv http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
         && tar -xzvf install-tl-unx.tar.gz
 
 # Little bit hacky cd
-RUN cd `echo ~/install-tl-20*` \
+RUN cd `echo /root/install-tl-20*` \
         && echo "selected_scheme scheme-custom\ncollection-basic 1\ncollection-fontsrecommended 1" >> texlive.profile \
         && ./install-tl -profile texlive.profile \
-        && cd ~ \
+        && cd /root \
         && rm -rf ./install-tl*
 
 # The year may need to be altered 
